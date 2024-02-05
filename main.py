@@ -15,14 +15,27 @@ def gerar_jogos(qtde_jogos):
 
     return jogos
 
+def verifica_tipo_premio(acertos=0):
+    if acertos == 4:
+        print("--------------------")
+        print("ACERTAMO A QUADRA!!!")
+        print("--------------------")
+    elif acertos == 5:
+        print("-------------------")
+        print("ACERTAMO A QUINA!!!")
+        print("-------------------")
+    elif acertos == 6:
+        print("----------------------------")
+        print("GANHAMOOOOOO CARALHOOOOOW!!!")
+        print("----------------------------")
+    else:
+        pass
+
 def verificar_premio(jogos, numeros_sorteados):
     for i, jogo in enumerate(jogos, start=1):
         acertos = set(jogo).intersection(numeros_sorteados)
         print(f"Jogo {i}: {', '.join(map(str, jogo))} - Acertos: {len(acertos)}")
-        if len(acertos) == 6:
-            print("----------------------------")
-            print("GANHAMOOOOOO CARALHOOOOOW!!!")
-            print("----------------------------")
+        verifica_tipo_premio(len(acertos))
 
 def carregar_jogos(arquivo):
     jogos = []
@@ -45,7 +58,7 @@ def main():
         sys.exit(1)
 
     if sys.argv[1] == '-check':
-        numeros_sorteados = list(map(int, sys.argv[2].split(',')))  # Remove aspas e converte para lista de inteiros
+        numeros_sorteados = list(map(int, sys.argv[2].split(',')))
         arquivo_jogos = sys.argv[3]
         jogos = carregar_jogos(arquivo_jogos)
         print(f"Números sorteados: {', '.join(map(str, numeros_sorteados))}")
