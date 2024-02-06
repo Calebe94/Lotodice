@@ -20,11 +20,11 @@ def gerar_jogos_quina(qtde_jogos):
 def verifica_tipo_premio(acertos=0):
     if acertos == 2:
         print("---------------------")
-        print("ACERTAMO UM DUQUE !!!")
+        print("ACERTAMO UM DUQUE!!!")
         print("---------------------")
     elif acertos == 3:
         print("---------------------")
-        print("ACERTAMO UM TERNO !!!")
+        print("ACERTAMO UM TERNO!!!")
         print("---------------------")
     elif acertos == 4:
         print("--------------------")
