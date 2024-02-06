@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import argparse
-from jogo import Jogo
-from mega import MegaSena
-from quina import Quina
+from .jogo import Jogo
+from .mega import MegaSena
+from .quina import Quina
 
 def main():
     parser = argparse.ArgumentParser(description="Jogos da Mega Sena ou Quina")

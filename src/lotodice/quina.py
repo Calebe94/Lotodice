@@ -1,4 +1,4 @@
-from jogo import Jogo
+from .jogo import Jogo
 
 class Quina(Jogo):
     def __init__(self, numeros_sorteados):
