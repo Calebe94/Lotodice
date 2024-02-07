@@ -21,16 +21,18 @@ def main():
         jogos = jogo.carregar_jogos(arquivo)
         print(f"Números sorteados: {', '.join(map(str, numeros_sorteados))}")
         jogo.verificar_premio(jogos)
+    elif args.quantidade and args.tipo:
+        jogo = MegaSena([]) if args.tipo == 'mega' else Quina([])
+        resultados = jogo.gerar_jogos(args.quantidade)
+        if args.export:
+            jogo.exportar_para_csv(resultados, args.export)
+            print(f"Jogos exportados para {args.export}")
+        else:
+            for i, jogo in enumerate(resultados, start=1):
+                print(f"Jogo {i}: {', '.join(map(str, jogo))}")
     else:
-        if args.quantidade and args.tipo:
-            jogo = MegaSena([]) if args.tipo == 'mega' else Quina([])
-            resultados = jogo.gerar_jogos(args.quantidade)
-            if args.export:
-                jogo.exportar_para_csv(resultados, args.export)
-                print(f"Jogos exportados para {args.export}")
-            else:
-                for i, jogo in enumerate(resultados, start=1):
-                    print(f"Jogo {i}: {', '.join(map(str, jogo))}")
+        parser.print_help()
+
 
 if __name__ == '__main__':
     main()
