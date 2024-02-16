@@ -3,6 +3,7 @@ import argparse
 from .jogo import Jogo
 from .mega import MegaSena
 from .quina import Quina
+from .browser import *
 
 def main():
     parser = argparse.ArgumentParser(description="Jogos da Mega Sena ou Quina")
@@ -11,6 +12,7 @@ def main():
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-e", "--export", metavar="caminho_para_arquivo.csv", help="Exporta os jogos para um arquivo CSV")
     group.add_argument("-c", "--check", nargs=2, metavar=("arquivo.csv", "numeros_sorteados"), help="Verifica se os jogos contidos no arquivo CSV ganharam")
+    group.add_argument("-b", "--browser", nargs=2, metavar=("mega.csv", "quina.csv"), help="Faz os jogos no site da Loterias Caixa")
 
     args = parser.parse_args()
 
@@ -21,6 +23,9 @@ def main():
         jogos = jogo.carregar_jogos(arquivo)
         print(f"Números sorteados: {', '.join(map(str, numeros_sorteados))}")
         jogo.verificar_premio(jogos)
+    elif args.browser:
+        mega, quina = args.browser
+        browser(mega, quina)
     elif args.quantidade and args.tipo:
         jogo = MegaSena([]) if args.tipo == 'mega' else Quina([])
         resultados = jogo.gerar_jogos(args.quantidade)
