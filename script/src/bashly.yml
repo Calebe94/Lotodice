@@ -1,0 +1,38 @@
+name: lotodice-run
+help: lotodice é uma ferramenta em Python para gerar e verificar jogos da Mega Sena e Quina.
+version: 0.1.0
+
+commands:
+- name: check
+  alias: c
+  help: Verifica os resultados dos jogos
+
+  args:
+  - name: concurso
+    required: false
+    help: Se nenhum concurso for passado como parâmetro, o resultado do último concurso será usado
+
+  examples:
+  - lotodice check
+  - lotodice check 6385
+
+- name: new
+  alias: n
+  help: Cria um novo jogo. ()
+
+  args:
+  - name: jogos
+    required: false
+    help: se nenhum argumento for passado, serão criados 4 jogos de cada
+
+  flags:
+  - long: --mega
+    short: -m
+    arg: mega
+    help: número de jogos da mega sena
+    required: false
+  - long: --quina
+    short: -q
+    arg: quina
+    required: false
+    help: número de jogos da quina
