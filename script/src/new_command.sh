@@ -1,7 +1,7 @@
 # echo "# this file is located in 'src/new_command.sh'"
 # echo "# code for 'lotodice new' goes here"
 # echo "# you can edit it freely and regenerate (it will not be overwritten)"
-inspect_args
+# inspect_args
 
 check_dependencies
 

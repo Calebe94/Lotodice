@@ -1,4 +1,4 @@
-inspect_args
+# inspect_args
 
 check_dependencies
 
@@ -58,8 +58,8 @@ check_latest_games()
     lotodice -c "$(get_latest_quina_game)" "$(get_latest_quina_dozens)"
 }
 
-get_latest_mega_game
-get_latest_quina_game
-get_latest_quina_contest
-get_latest_mega_contest
-# check_latest_games
+# get_latest_mega_game
+# get_latest_quina_game
+# get_latest_quina_contest
+# get_latest_mega_contest
+check_latest_games
