@@ -1,4 +1,3 @@
-
 import csv
 import signal
 import sys
@@ -83,12 +82,17 @@ class LotteryAutomator:
             )
             self.select_numbers_and_add_to_cart(game)
 
+
 def handle_exit(signum, frame):
     print("\nEncerrando o script e fechando o navegador...")
     sys.exit(0)
 
+
 def browser(mega_path, quina_path):
     """Main method to execute the lottery automation."""
+
+    if not mega_path and not quina_path:
+        return
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
     driver = webdriver.Chrome(options=options)
@@ -100,20 +104,24 @@ def browser(mega_path, quina_path):
         print("Aceitando os termos de uso...")
         automator.accept_terms()
 
-        # Process Mega Sena games
-        print("Carregando jogos da Mega Sena...")
-        mega_games = automator.load_games_from_file(mega_path)
-        print("Criando jogos da Mega Sena...")
-        automator.create_lottery_tickets(automator.URL_MEGA_SENA, mega_games)
+        if mega_path:
+            # Process Mega Sena games
+            print("Carregando jogos da Mega Sena...")
+            mega_games = automator.load_games_from_file(mega_path)
+            print("Criando jogos da Mega Sena...")
+            automator.create_lottery_tickets(automator.URL_MEGA_SENA, mega_games)
 
-        # Process Quina games
-        print("Carregando jogos da Quina...")
-        quina_games = automator.load_games_from_file(quina_path)
-        print("Criando jogos da Quina...")
-        automator.create_lottery_tickets(automator.URL_QUINA, quina_games)
+        if quina_path:
+            # process quina games
+            print("carregando jogos da quina...")
+            quina_games = automator.load_games_from_file(quina_path)
+            print("criando jogos da quina...")
+            automator.create_lottery_tickets(automator.URL_QUINA, quina_games)
 
         # Aguardar encerramento do script pelo usuário
-        print("\nAutomação concluída. Pressione Ctrl+C para encerrar o script e fechar o navegador.")
+        print(
+            "\nAutomação concluída. Pressione Ctrl+C para encerrar o script e fechar o navegador."
+        )
         signal.signal(signal.SIGINT, handle_exit)
         signal.signal(signal.SIGTERM, handle_exit)
 
