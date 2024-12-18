@@ -39,25 +39,45 @@ class LotteryAutomator:
         for numbers in ticket_numbers:
             print(f"Acessando a URL: {url}...")
             self.driver.get(url)
-            print(f"Aguardando carregar os números...")
-            WebDriverWait(self.driver, 10).until(
+
+            # Aguarde que os números estejam visíveis
+            print("Aguardando carregar os números...")
+            WebDriverWait(self.driver, 14).until(
                 EC.visibility_of_all_elements_located(
                     (By.CSS_SELECTOR, "ul.escolhe-numero li a.ng-binding")
                 )
             )
+
             for number in numbers:
-                print(f"Clicando no número {number}")
-                number_element = WebDriverWait(self.driver, 10).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, f"//a[text()='{number:02d}']")
+                try:
+                    print(f"Clicando no número {number}")
+                    print(
+                        f"Procurando XPath para o número: //ul[contains(@class, 'escolhe-numero')]//a[text()='{number:02d}']"
                     )
+                    # Localize e clique no número
+                    number_element = WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(
+                            (
+                                By.XPATH,
+                                f"//ul[contains(@class, 'escolhe-numero')]//a[text()='{number:02d}']",
+                            )
+                        )
+                    )
+                    number_element.click()
+                except Exception as e:
+                    print(f"Erro ao clicar no número {number}: {e}")
+                    continue  # Pule para o próximo número
+
+            # Adicione os números ao carrinho
+            try:
+                print("Adicionando jogos no carrinho...")
+                add_to_cart_button = WebDriverWait(self.driver, 10).until(
+                    EC.element_to_be_clickable((By.ID, "colocarnocarrinho"))
                 )
-                number_element.click()
-            add_to_cart_button = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, "colocarnocarrinho"))
-            )
-            print("Adicionando jogos no carrinho...")
-            add_to_cart_button.click()
+                add_to_cart_button.click()
+            except Exception as e:
+                print(f"Erro ao adicionar ao carrinho: {e}")
+                continue
 
     def load_games_from_file(self, filepath):
         """Loads game numbers from a CSV file."""
@@ -78,7 +98,7 @@ class LotteryAutomator:
         print(mega_games)
         print("Carregando os jogos da Quina...")
         quina_games = self.load_games_from_file(quina_path)
-        print(mega_games)
+        print(quina_games)  # Correção: agora mostra os jogos da Quina
         print("Criando os jogos da Quina...")
         self.create_lottery_tickets(self.URL_QUINA, quina_games)
         print("Criando os jogos da Mega Sena...")
