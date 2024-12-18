@@ -2,7 +2,6 @@
 import argparse
 
 from .browser import browser
-from .jogo import Jogo
 from .mega import MegaSena
 from .quina import Quina
 
@@ -13,12 +12,14 @@ def parse_browser_args(browser_args):
     for arg in browser_args:
         if "=" not in arg:
             raise argparse.ArgumentTypeError(
-                f"Formato inválido: '{arg}'. Use o formato tipo=/caminho/para/arquivo.csv"
+                f"Formato inválido: '{arg}'."
+                "Use o formato tipo=/caminho/para/arquivo.csv"
             )
         key, value = arg.split("=", 1)
         if key not in ["mega", "quina"]:
             raise argparse.ArgumentTypeError(
-                f"Tipo inválido: '{key}'. Somente 'mega' e 'quina' são permitidos."
+                f"Tipo inválido: '{key}'."
+                "Somente 'mega' e 'quina' são permitidos."  # noqa
             )
         parsed_args[key] = value
     return parsed_args
@@ -27,10 +28,16 @@ def parse_browser_args(browser_args):
 def main():
     parser = argparse.ArgumentParser(description="Jogos da Mega Sena ou Quina")
     parser.add_argument(
-        "-t", "--tipo", choices=["mega", "quina"], help="Tipo de jogo (mega ou quina)"
+        "-t",
+        "--tipo",
+        choices=["mega", "quina"],
+        help="Tipo de jogo (mega ou quina)",  # noqa
     )
     parser.add_argument(
-        "-q", "--quantidade", type=int, help="Quantidade de jogos a serem gerados"
+        "-q",
+        "--quantidade",
+        type=int,
+        help="Quantidade de jogos a serem gerados",  # noqa
     )
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
@@ -51,7 +58,7 @@ def main():
         "--browser",
         nargs="+",
         metavar="tipo=/path/to/file.csv",
-        help="Faz os jogos no site da Loterias Caixa (ex.: mega=/path/to/file.csv quina=/path/to/file.csv)",
+        help="Faz os jogos no site da Loterias Caixa (ex.: mega=/path/to/file.csv quina=/path/to/file.csv)",  # noqa
     )
 
     args = parser.parse_args()
@@ -76,7 +83,7 @@ def main():
 
         if not mega_path:
             print(
-                "Erro: O arquivo de jogos da Mega Sena é obrigatório para o modo browser."
+                "Erro: O arquivo de jogos da Mega Sena é obrigatório para o modo browser."  # noqa
             )
         else:
             browser(mega_path, quina_path)

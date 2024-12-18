@@ -9,13 +9,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 
 class LotteryAutomator:
-    """Automates the process of selecting lottery numbers on the Caixa lottery website."""
+    """Automates the process of selecting lottery numbers on the Caixa lottery website."""  # noqa
 
     URL_TERMS_OF_USE = (
         "https://www.loteriasonline.caixa.gov.br/silce-web/#/termos-de-uso"
     )
     URL_MEGA_SENA = (
-        "https://www.loteriasonline.caixa.gov.br/silce-web/#/mega-sena/especial"
+        "https://www.loteriasonline.caixa.gov.br/silce-web/#/mega-sena/especial"  # noqa
     )
     URL_QUINA = "https://www.loteriasonline.caixa.gov.br/silce-web/#/quina"
 
@@ -30,7 +30,9 @@ class LotteryAutomator:
         )
         accept_button.click()
         WebDriverWait(self.driver, 10).until(
-            EC.url_to_be("https://www.loteriasonline.caixa.gov.br/silce-web/#/home")
+            EC.url_to_be(
+                "https://www.loteriasonline.caixa.gov.br/silce-web/#/home"
+            )  # noqa
         )
 
     def select_numbers_and_add_to_cart(self, numbers):
@@ -78,7 +80,9 @@ class LotteryAutomator:
             self.driver.get(url)
 
             WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located((By.CLASS_NAME, "escolhe-numero"))
+                EC.visibility_of_element_located(
+                    (By.CLASS_NAME, "escolhe-numero")
+                )  # noqa
             )
             self.select_numbers_and_add_to_cart(game)
 
@@ -109,7 +113,9 @@ def browser(mega_path, quina_path):
             print("Carregando jogos da Mega Sena...")
             mega_games = automator.load_games_from_file(mega_path)
             print("Criando jogos da Mega Sena...")
-            automator.create_lottery_tickets(automator.URL_MEGA_SENA, mega_games)
+            automator.create_lottery_tickets(
+                automator.URL_MEGA_SENA, mega_games
+            )  # noqa
 
         if quina_path:
             # process quina games
@@ -120,7 +126,7 @@ def browser(mega_path, quina_path):
 
         # Aguardar encerramento do script pelo usuário
         print(
-            "\nAutomação concluída. Pressione Ctrl+C para encerrar o script e fechar o navegador."
+            "\nAutomação concluída. Pressione Ctrl+C para encerrar o script e fechar o navegador."  # noqa
         )
         signal.signal(signal.SIGINT, handle_exit)
         signal.signal(signal.SIGTERM, handle_exit)

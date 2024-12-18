@@ -1,5 +1,6 @@
 from .jogo import Jogo
 
+
 class Quina(Jogo):
     def __init__(self, numeros_sorteados):
         super().__init__(80, numeros_sorteados)

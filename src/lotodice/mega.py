@@ -1,5 +1,6 @@
 from .jogo import Jogo
 
+
 class MegaSena(Jogo):
     def __init__(self, numeros_sorteados):
         super().__init__(60, numeros_sorteados)
